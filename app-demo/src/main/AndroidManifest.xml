@@ -7,7 +7,7 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/CustomChatSDKTheme"
+        android:theme="@style/GGTheme"
         android:name="sdk.chat.demo.MainApp"
         android:hardwareAccelerated="true"
         tools:replace="allowBackup, icon">

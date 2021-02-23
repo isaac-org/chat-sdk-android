@@ -63,8 +63,8 @@ android {
 }
 
 dependencies {
-    implementation project(':chat-sdk-demo')
-//    api project(':chat-sdk-app-firebase')
+    //implementation project(':chat-sdk-demo')
+    api project(':chat-sdk-app-firebase')
 
 //    // Recommended: Add the Firebase SDK for Google Analytics.
 //    implementation "com.google.firebase:firebase-analytics:$firebaseAnalyticsVersion"

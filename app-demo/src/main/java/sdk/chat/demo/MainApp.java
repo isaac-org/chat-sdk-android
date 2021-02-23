@@ -6,9 +6,9 @@ import org.pmw.tinylog.Logger;
 
 import sdk.chat.app.firebase.ChatSDKFirebase;
 import sdk.chat.core.session.ChatSDK;
-import sdk.chat.firebase.blocking.FirebaseBlockingModule;
-import sdk.chat.firebase.receipts.FirebaseReadReceiptsModule;
-import sdk.chat.message.audio.AudioMessageModule;
+//import sdk.chat.firebase.blocking.FirebaseBlockingModule;
+//import sdk.chat.firebase.receipts.FirebaseReadReceiptsModule;
+//import sdk.chat.message.audio.AudioMessageModule;
 
 public class MainApp extends Application {
 
@@ -19,10 +19,11 @@ public class MainApp extends Application {
         try {
 
             // Setup Chat SDK
-            ChatSDKFirebase.quickStart(this, "test_1", "AIzaSyCwwtZrlY9Rl8paM0R6iDNBEit_iexQ1aE", true,
-                    AudioMessageModule.shared(),
-                    FirebaseBlockingModule.shared(),
-                    FirebaseReadReceiptsModule.shared()
+            ChatSDKFirebase.quickStart(this, "test_1", "AIzaSyCwwtZrlY9Rl8paM0R6iDNBEit_iexQ1aE", true
+//                    ,
+//                    AudioMessageModule.shared(),
+//                    FirebaseBlockingModule.shared(),
+//                    FirebaseReadReceiptsModule.shared()
             );
 
             ChatSDK.events().sourceOnMain().subscribe(event -> {

@@ -3,6 +3,7 @@ package sdk.chat.app.firebase;
 import android.content.Context;
 
 import com.google.firebase.auth.EmailAuthProvider;
+import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.auth.PhoneAuthProvider;
 
 import java.util.Arrays;
@@ -36,18 +37,19 @@ public class ChatSDKFirebase extends QuickStart {
                 FirebaseModule.builder()
                         .setFirebaseRootPath(rootPath)
                         .setDisableClientProfileUpdate(false)
-                        .setEnableCompatibilityWithV4(true)
+                        .setEnableCompatibilityWithV4(false)
                         .setDevelopmentModeEnabled(true)
                         .build(),
 
                 UIModule.builder()
-                        .setPublicRoomCreationEnabled(true)
-                        .setPublicRoomsEnabled(true)
+                        .setPublicRoomCreationEnabled(false)
+                        .setPublicRoomsEnabled(false)
+                        .setLocationMessagesEnabled(false)
                         .build(),
 
                 FirebaseUploadModule.shared(),
 
-                LocationMessageModule.shared(),
+//                LocationMessageModule.shared(),
 
                 FirebasePushModule.shared(),
 
@@ -56,7 +58,8 @@ public class ChatSDKFirebase extends QuickStart {
                 }),
 
                 FirebaseUIModule.builder()
-                        .setProviders(EmailAuthProvider.PROVIDER_ID, PhoneAuthProvider.PROVIDER_ID)
+//                        .setProviders(EmailAuthProvider.PROVIDER_ID, PhoneAuthProvider.PROVIDER_ID)
+                        .setProviders(GoogleAuthProvider.PROVIDER_ID, PhoneAuthProvider.PROVIDER_ID)
                         .build()
         );
 

@@ -1,50 +1,43 @@
 {
   "project_info": {
-    "project_number": "1088435112418",
-    "firebase_url": "https://chat-sdk-v4.firebaseio.com",
-    "project_id": "chat-sdk-v4",
-    "storage_bucket": "chat-sdk-v4.appspot.com"
+    "project_number": "449443284165",
+    "firebase_url": "https://isaac-android-dev-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "isaac-android-dev",
+    "storage_bucket": "isaac-android-dev.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1088435112418:android:813ea9bf20e0a13f5611bb",
+        "mobilesdk_app_id": "1:449443284165:android:63d2e5d7720929704b1cac",
         "android_client_info": {
-          "package_name": "sdk.chat.android.live"
+          "package_name": "sdk.chat.android.live.isaac"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1088435112418-900e65u7oloc6tvbf9cl9qv5fjctv4t7.apps.googleusercontent.com",
+          "client_id": "449443284165-khjf5o1nsgo3eu1bf31cnmvf3i7sob7h.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "sdk.chat.android.live",
+            "package_name": "sdk.chat.android.live.isaac",
             "certificate_hash": "e4e36b1e2f9ac7d7b8e867e08c94cb1dbfaaf9c4"
           }
         },
         {
-          "client_id": "1088435112418-e3t77t8jl2ucs8efeqs72o696in8soui.apps.googleusercontent.com",
+          "client_id": "449443284165-1g4kaifpqp7udvel73clcjprb8pq3giv.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAf-dkxZw1m-mP_E-jpTvk1lFtGioev6m0"
+          "current_key": "AIzaSyDHnh4A0N6RSnp-Xprn2epdEK6_feHe-T0"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1088435112418-7gfr9061rqnlg5fj1d510unql3mu5qjp.apps.googleusercontent.com",
+              "client_id": "449443284165-1g4kaifpqp7udvel73clcjprb8pq3giv.apps.googleusercontent.com",
               "client_type": 3
-            },
-            {
-              "client_id": "1088435112418-94j149s4i4q32u4m8s0dqt5ctdpfd235.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "org.cocoapods.FireStream-Tests"
-              }
             }
           ]
         }

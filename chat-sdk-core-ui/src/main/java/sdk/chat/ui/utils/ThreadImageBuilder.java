@@ -156,7 +156,8 @@ public class ThreadImageBuilder {
     }
 
     public static Drawable defaultDrawable(Thread thread) {
-        if (thread == null || thread.typeIs(ThreadType.Private1to1)) {
+        if (thread == null || thread.typeIs(ThreadType.Private1to1)
+                || thread.typeIs(ThreadType.Context)) {
             return Icons.get(Icons.choose().users, R.color.thread_default_icon_color);
         }
         else {

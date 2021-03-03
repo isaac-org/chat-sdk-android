@@ -10,6 +10,7 @@ public class ThreadType {
     public static int None = -1;
     public static int PrivateGroup = 0x1;
     public static int Private1to1 = 0x2;
+    public static int Context = 0x10;
     public static int PublicGroup = 0x4;
     public static int Snap = 0x8;
 

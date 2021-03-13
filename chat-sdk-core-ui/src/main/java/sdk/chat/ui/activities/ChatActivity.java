@@ -32,6 +32,8 @@ import org.pmw.tinylog.Logger;
 import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
@@ -578,9 +580,25 @@ public class ChatActivity extends BaseActivity implements TextInputDelegate, Cha
             if (holder instanceof ImageMessageHolder) {
                 imageURL = ((ImageMessageHolder) holder).getImageUrl();
             }
-            showReplyView(holder.getUser().getName(), imageURL, holder.getText());
-            input.requestFocus();
-            showKeyboard();
+            /* Comment below default implementation of reply
+//            showReplyView(holder.getUser().getName(), imageURL, holder.getText());
+//            input.requestFocus();
+//            showKeyboard();
+            */
+            // We don't want to remove the user if we load another activity
+            // Like the sticker activity
+            removeUserFromChatOnExit = false;
+//            clearSelection();
+            dm.add(ChatSDK.thread()
+                    .create1to1ContextThread("Context thread", thread.getUsers(),
+                        holder.getMessage().getEntityID(), null, null)
+                    .flatMapCompletable(t -> ChatSDK.thread().forwardMessages(t,
+                            Arrays.asList(holder.getMessage())))
+                    .observeOn(RX.main())
+                    .subscribe(() -> {
+                        ChatSDK.ui().startChatActivityForID(this, holder.getMessage().getEntityID());
+                        finish();
+                    }, this));
         }
 
         if (id == R.id.action_add) {

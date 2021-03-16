@@ -39,12 +39,13 @@ public abstract class MessageHandler implements IMessageHandler {
             DialogUtils.showToastDialog(activity, R.string.message_send_failed, R.string.try_to_resend_the_message, R.string.send, R.string.cancel, () -> {
                 MessageSendRig.create(message).run().subscribe(ChatSDK.events());
             }, null);
-        } else if(message.getMessageType().is(MessageType.Text)) {
+		//TODO Handle on-click of context-thread root message
+		/*} else if(message is a context-thread root message)) {
             for (Thread thread:ChatSDK.thread().getThreads(ThreadType.Context)) {
-                if (thread.getEntityID().equals(message.getEntityID())) {
-                    ChatSDK.ui().startChatActivityForID(activity, message.getEntityID());
+                if (thread.getEntityID().equals(context-thread id)) {
+                    ChatSDK.ui().startChatActivityForID(activity, context-thread id());
                 }
-            }
+            }*/
         }
     }
 

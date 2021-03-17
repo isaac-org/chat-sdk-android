@@ -1,5 +1,6 @@
 package sdk.chat.core.handlers;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.util.Date;
@@ -32,6 +33,8 @@ public interface ThreadHandler {
 
     Single<Thread> create1to1Thread(User otherUser, @Nullable Map<String, Object> meta);
     Single<Thread> createPrivateGroupThread(@Nullable String name, List<User> users, @Nullable String entityID, @Nullable String imageURL, @Nullable Map<String, Object> meta);
+
+    Single<Thread> create1to1ContextThread(String name, List<User> users, @NonNull String rootMessageEntityId, @Nullable String imageURL, @Nullable Map<String, Object> meta);
 
     /**
      * Remove users from a thread

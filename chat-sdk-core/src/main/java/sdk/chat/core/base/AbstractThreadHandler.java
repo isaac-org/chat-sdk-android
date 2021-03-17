@@ -1,5 +1,6 @@
 package sdk.chat.core.base;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
@@ -92,6 +93,10 @@ public abstract class AbstractThreadHandler implements ThreadHandler {
 
     public Single<Thread> create1to1Thread(User otherUser, @Nullable Map<String, Object> meta) {
         return createThread(null, Collections.singletonList(otherUser), ThreadType.Private1to1, null, null, meta);
+    }
+
+    public Single<Thread> create1to1ContextThread(String name, List<User> users, @NonNull String rootMessageEntityId, @Nullable String imageURL, @Nullable Map<String, Object> meta) {
+        return createThread( name, users, ThreadType.Context, rootMessageEntityId, imageURL, meta);
     }
 
     public Single<Thread> createPrivateGroupThread(@Nullable String name, List<User> users, @Nullable String entityID, @Nullable String imageURL, @Nullable Map<String, Object> meta) {

@@ -4,9 +4,12 @@ import android.content.Context;
 import android.view.View;
 
 import sdk.chat.core.dao.Message;
+import sdk.chat.core.dao.Thread;
+import sdk.chat.core.interfaces.ThreadType;
 import sdk.chat.core.rigs.MessageSendRig;
 import sdk.chat.core.session.ChatSDK;
 import sdk.chat.core.types.MessageSendStatus;
+import sdk.chat.core.types.MessageType;
 import sdk.chat.ui.R;
 import sdk.chat.ui.activities.ChatActivity;
 import sdk.chat.ui.chat.model.MessageHolder;
@@ -36,6 +39,13 @@ public abstract class MessageHandler implements IMessageHandler {
             DialogUtils.showToastDialog(activity, R.string.message_send_failed, R.string.try_to_resend_the_message, R.string.send, R.string.cancel, () -> {
                 MessageSendRig.create(message).run().subscribe(ChatSDK.events());
             }, null);
+		//TODO Handle on-click of context-thread root message
+		/*} else if(message is a context-thread root message)) {
+            for (Thread thread:ChatSDK.thread().getThreads(ThreadType.Context)) {
+                if (thread.getEntityID().equals(context-thread id)) {
+                    ChatSDK.ui().startChatActivityForID(activity, context-thread id());
+                }
+            }*/
         }
     }
 

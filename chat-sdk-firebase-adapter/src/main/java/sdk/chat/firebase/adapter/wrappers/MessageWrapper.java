@@ -27,6 +27,7 @@ import sdk.chat.core.dao.DaoCore;
 import sdk.chat.core.dao.Keys;
 import sdk.chat.core.dao.Message;
 import sdk.chat.core.dao.ReadReceiptUserLink;
+import sdk.chat.core.dao.Thread;
 import sdk.chat.core.dao.User;
 import sdk.chat.core.events.NetworkEvent;
 import sdk.chat.core.hook.HookEvent;
@@ -288,5 +289,48 @@ public class MessageWrapper  {
 
             // Do this to stop duplication of links
         }).subscribeOn(RX.single());
+    }
+
+    public Completable postMessageSendToContextThread() {
+        return Completable.defer(() -> {
+            // Special handling for Context Thread
+            Thread t = model.getThread();
+            if(t.getType() != ThreadType.Context) {
+                return Completable.complete();
+            }
+
+            Message firstMsg = t.firstMessage();
+            Integer numMessages = t.getMessageCount();
+            if(firstMsg == null || numMessages == null) {
+                return Completable.complete();
+            }
+
+            if(numMessages <= 1) {
+                // If there are only 1 message, its initialization case - count will be set on initialization of root message
+                // Also the root message is pushed to server after embedded msg. hence we may not be able to fetch root message as below
+                return Completable.complete();
+            }
+
+            // Get rootMsg. Modify the num-replies key for root msg
+            // TODO: Handle errors
+            String parentMsgId = firstMsg.stringForKey(Keys.ParentMessageId);
+            Message contextRootMessage = ChatSDK.db().fetchEntityWithEntityID(parentMsgId, Message.class);
+            contextRootMessage.setValueForKey(numMessages, Keys.EmbeddedThreadMessageCount);
+
+            Map<String, Object> map = new HashMap<String, Object>() {{
+                put(Keys.EmbeddedThreadMessageCount, numMessages);
+            }};
+
+            DatabaseReference ref = FirebasePaths.threadMessageRef(contextRootMessage.getThread().getEntityID(), contextRootMessage.getEntityID())
+                    .child(FirebasePaths.MetaPath)
+                    .child(Keys.EmbeddedThreadMessageCount);
+
+            RXRealtime realtime = new RXRealtime();
+            Completable completable = realtime.set(ref, numMessages);
+//            Completable completable = realtime.set(ref, map);
+
+            // TODO: Check how the info update will be synced with other user's app
+            return completable;
+        });
     }
 }

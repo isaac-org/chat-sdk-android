@@ -92,6 +92,8 @@ public interface ThreadHandler {
 
     Single<Integer> getUnreadMessagesAmount(boolean onePerThread);
 
+    Completable postMessageSendToContextThread(Message message);
+
     // TODO: Consider making this a PThread for consistency
     /**
      * Get the messages for a particular thread

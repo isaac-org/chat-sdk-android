@@ -583,6 +583,22 @@ public class Thread extends AbstractEntity {
         }
     }
 
+    public Message firstMessage () {
+        List<Message> messages = getMessagesWithOrder(DaoCore.ORDER_ASC, 1);
+        if (messages.size() > 0) {
+            return messages.get(0);
+        } else {
+            return null;
+        }
+    }
+
+    public Integer getMessageCount () {
+        // TODO: Optimize with a count query
+        List<Message> messages = getMessages();
+        return messages != null ? messages.size(): null;
+    }
+
+
     public Long getCreatorId() {
         return this.creatorId;
     }

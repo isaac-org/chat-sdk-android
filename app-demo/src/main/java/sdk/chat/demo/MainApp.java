@@ -6,6 +6,8 @@ import org.pmw.tinylog.Logger;
 
 import sdk.chat.app.firebase.ChatSDKFirebase;
 import sdk.chat.core.session.ChatSDK;
+import sdk.chat.ui.ChatSDKUI;
+import sdk.chat.ui.custom.ContextRootMessageHandler;
 //import sdk.chat.firebase.blocking.FirebaseBlockingModule;
 //import sdk.chat.firebase.receipts.FirebaseReadReceiptsModule;
 //import sdk.chat.message.audio.AudioMessageModule;
@@ -35,7 +37,7 @@ public class MainApp extends Application {
                 event.printStackTrace();
             });
 
-
+            ChatSDKUI.shared().getMessageCustomizer().addMessageHandler(new ContextRootMessageHandler());
 
             //
 //            MessageCustomizer.shared().addMessageHandler(new IMessageHandler() {

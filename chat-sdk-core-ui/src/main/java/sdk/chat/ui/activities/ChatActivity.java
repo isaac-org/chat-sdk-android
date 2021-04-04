@@ -32,10 +32,14 @@ import org.pmw.tinylog.Logger;
 import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
 import io.reactivex.Completable;
+import io.reactivex.CompletableSource;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
 import sdk.chat.core.dao.Keys;
 import sdk.chat.core.dao.Message;
 import sdk.chat.core.dao.Thread;
@@ -47,7 +51,9 @@ import sdk.chat.core.interfaces.ChatOption;
 import sdk.chat.core.interfaces.ChatOptionsDelegate;
 import sdk.chat.core.interfaces.ChatOptionsHandler;
 import sdk.chat.core.interfaces.ThreadType;
+import sdk.chat.core.rigs.MessageSendRig;
 import sdk.chat.core.session.ChatSDK;
+import sdk.chat.core.types.MessageType;
 import sdk.chat.core.utils.ActivityResultPushSubjectHolder;
 import sdk.chat.core.utils.CurrentLocale;
 import sdk.chat.core.utils.StringChecker;
@@ -250,7 +256,12 @@ public class ChatActivity extends BaseActivity implements TextInputDelegate, Cha
             audioBinder = new AudioBinder(this, this, input);
         } else {
             input.setInputListener(input -> {
-                sendMessage(String.valueOf(input));
+                if(thread.getType() == ThreadType.Context) {
+                    sendMessage(String.valueOf(input));
+                }
+                else {
+                    startConversation(String.valueOf(input));
+                }
                 return true;
             });
         }
@@ -356,7 +367,46 @@ public class ChatActivity extends BaseActivity implements TextInputDelegate, Cha
         } else {
             handleMessageSend(ChatSDK.thread().sendMessageWithText(text.trim(), thread));
         }
+    }
 
+    public void startConversation(String text) {
+        // Clear the draft text
+        thread.setDraft(null);
+
+        if (text == null || text.isEmpty() || text.replace(" ", "").isEmpty()) {
+            return;
+        }
+
+        // Algo for conversation start
+        // Create the context Thread
+        // Send the embedded message
+        // Send the contextRoot message
+
+        Message rootMsg = ChatSDK.thread().newMessage(MessageType.IsContextRoot, thread);
+
+        // TODO: The code is not optimized to be fail safe. Do that
+        ChatSDK.thread()
+                .create1to1ContextThread("Context Thread", thread.getUsers(), null, null, null)
+                .flatMapCompletable((contextThread -> {
+                    return Completable.defer(() -> {
+                        Message embedMsg = ChatSDK.thread().newMessage(MessageType.Text, contextThread);
+                        embedMsg.setText(text);
+                        embedMsg.setValueForKey(rootMsg.getEntityID(), Keys.ParentMessageId);
+                        embedMsg.setValueForKey(thread.getEntityID(), Keys.ParentThreadId);
+
+                        rootMsg.setValueForKey(embedMsg.getEntityID(), Keys.EmbeddedMessageId);
+                        rootMsg.setValueForKey(contextThread.getEntityID(), Keys.EmbeddedThreadId);
+                        rootMsg.setValueForKey(MessageType.Text, Keys.EmbeddedMessageType);
+                        rootMsg.setValueForKey(text, Keys.EmbeddedMessageText);
+                        rootMsg.setValueForKey(1, Keys.EmbeddedThreadMessageCount);
+
+                        return new MessageSendRig(embedMsg, contextThread).run();
+                    });
+                }))
+                .andThen(Completable.defer(() -> {
+                    return new MessageSendRig(rootMsg, thread).run();
+                }))
+                .observeOn(RX.main()).subscribe(this);
     }
 
     protected void handleMessageSend(Completable completable) {

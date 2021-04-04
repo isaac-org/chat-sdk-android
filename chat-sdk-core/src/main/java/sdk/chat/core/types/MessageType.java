@@ -32,6 +32,11 @@ public class MessageType {
     public static final int File = 7;
     public static final int Contact = 8;
     public static final int Snap = 9;
+    public static final int IsContextRoot = 101;
+    public static final int IsSolutionVideo = 102;
+    public static final int IsSolutionBasics = 103;
+    public static final int IsTextDoubt = 104;
+    public static final int IsImageDoubt = 105;
     public static final int Max = 100000;
 
     private int value;

@@ -62,6 +62,15 @@ public class Keys {
     public static final String MessageStickerName = "sticker";
     public static final String MessageMimeType = "mime-type";
     public static final String MessageFileURL = "file-url";
+    public static final String EmbeddedMessageId = "em-msg-id";
+    public static final String EmbeddedThreadId = "em-thread-id";
+    public static final String EmbeddedMessageType = "em-msg-type";
+    public static final String EmbeddedMessageText = "em-msg-text";
+    public static final String EmbeddedMessageImageURL = "em-msg-image-url";
+    public static final String EmbeddedMessagePostURL = "em-msg-post-url";
+    public static final String EmbeddedThreadMessageCount = "em-thread-msg-count";
+    public static final String ParentMessageId = "parent-msg-id";
+    public static final String ParentThreadId = "parent-thread-id";
 
     // CoreUser details
     public static final String Location = "location";

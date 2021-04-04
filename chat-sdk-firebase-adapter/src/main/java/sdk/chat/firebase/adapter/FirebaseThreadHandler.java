@@ -151,6 +151,11 @@ public class FirebaseThreadHandler extends AbstractThreadHandler {
         });
     }
 
+    public Completable postMessageSendToContextThread(Message message) {
+        return new MessageWrapper(message).postMessageSendToContextThread();
+    }
+
+
     public Single<Thread> createThread(String name, List<User> theUsers, int type, String entityID, String imageURL, Map<String, Object> meta) {
         return Single.defer(() -> {
 

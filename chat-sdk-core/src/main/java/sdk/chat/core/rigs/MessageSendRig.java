@@ -136,7 +136,7 @@ public class MessageSendRig {
                 } else {
                     return ChatSDK.thread().sendMessage(message);
                 }
-            }));
+            })).andThen(ChatSDK.thread().postMessageSendToContextThread(message));
         }).subscribeOn(RX.quick())
                 .doOnComplete(() -> message.setMessageStatus(MessageSendStatus.Sent))
                 .doOnError(throwable -> message.setMessageStatus(MessageSendStatus.Failed));
